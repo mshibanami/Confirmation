@@ -13,7 +13,7 @@ import UIKit
 #endif
 
 public enum Confirmation {
-    public enum Action {
+    public enum Action: Equatable {
         case `default`(title: String, isPreferred: Bool = false)
         case destructive(title: String, isPreferred: Bool = false)
         case cancel(title: String? = nil)
