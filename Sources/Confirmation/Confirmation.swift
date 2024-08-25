@@ -59,7 +59,7 @@ public enum Confirmation {
 
     public enum Style {
 #if os(macOS)
-        case alert(NSWindow? = nil, style: NSAlert.Style = .informational)
+        case alert(NSWindow? = nil, style: NSAlert.Style = .warning)
         case sheet(NSWindow? = nil)
 
         var window: NSWindow? {
