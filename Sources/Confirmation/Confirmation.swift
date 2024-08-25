@@ -59,12 +59,12 @@ public enum Confirmation {
 
     public enum Style {
 #if os(macOS)
-        case alert(NSWindow? = nil)
+        case alert(NSWindow? = nil, style: NSAlert.Style = .informational)
         case sheet(NSWindow? = nil)
 
         var window: NSWindow? {
             switch self {
-            case .alert(let window):
+            case .alert(let window, _):
                 return window
             case .sheet(let window):
                 return window
@@ -98,7 +98,6 @@ public enum Confirmation {
         assert(!actions.isEmpty)
 #if os(macOS)
         let alert = NSAlert()
-        alert.alertStyle = .warning
         alert.messageText = title ?? ""
         alert.informativeText = description ?? ""
         var selectedAction: Action?
@@ -127,7 +126,8 @@ public enum Confirmation {
             }
         }
         switch style {
-        case .alert:
+        case .alert(_, let style):
+            alert.alertStyle = style
             alert.runModal()
         case .sheet(window: let window):
             guard let window = window ?? NSApp.keyWindow else {
