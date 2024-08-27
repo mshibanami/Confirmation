@@ -23,7 +23,7 @@ struct ContentView: View {
                 Text("Show a sheet")
             }
 #if os(iOS)
-            .sourceView(sheetButtonSourceView)
+            .confirmationSourceView(sheetButtonSourceView)
 #endif
         }
         .buttonStyle(.borderedProminent)

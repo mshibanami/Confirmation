@@ -25,7 +25,7 @@ struct ConfirmationSourceView: UIViewRepresentable {
 }
 
 public extension View {
-    func sourceView(_ uiView: UIView) -> some View {
+    func confirmationSourceView(_ uiView: UIView) -> some View {
         overlay(
             ConfirmationSourceView(uiView)
                 .allowsHitTesting(false))
