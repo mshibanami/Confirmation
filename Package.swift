@@ -8,13 +8,15 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v15),
-        .macOS(.v11)
+        .macOS(.v11),
+        .tvOS(.v15),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Confirmation",
-            targets: ["Confirmation"])
+            targets: ["Confirmation"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,9 +27,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Confirmation",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "ConfirmationTests",
-            dependencies: ["Confirmation"])
+            dependencies: ["Confirmation"]
+        ),
     ]
 )

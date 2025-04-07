@@ -40,11 +40,15 @@ extension UIApplication {
     }
 
     private func visibleLeaves(from parent: UIViewController, excluding excludedTypes: [UIViewController.Type] = []) -> [UIViewController] {
-        let isExcluded: (UIViewController) -> Bool = { vc in
-            excludedTypes.contains(where: { vc.isKind(of: $0) }) || vc.modalPresentationStyle == .popover
+        let isExcludedViewController: (UIViewController) -> Bool = { vc in
+            var isExcluded = excludedTypes.contains(where: { vc.isKind(of: $0) })
+#if !os(tvOS)
+            isExcluded = isExcluded || vc.modalPresentationStyle == .popover
+#endif
+            return isExcluded
         }
 
-        if let presented = parent.presentedViewController, !isExcluded(presented) {
+        if let presented = parent.presentedViewController, !isExcludedViewController(presented) {
             return self.visibleLeaves(from: presented, excluding: excludedTypes)
         }
 
@@ -58,7 +62,7 @@ extension UIApplication {
 
         if !visibleLeaves.isEmpty {
             return visibleLeaves
-        } else if !isExcluded(parent) {
+        } else if !isExcludedViewController(parent) {
             return [parent]
         } else {
             return []
