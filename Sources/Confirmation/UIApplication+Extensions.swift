@@ -5,7 +5,7 @@
 //  Created by Manabu Nakazawa on 2/9/2022.
 //
 
-#if os(iOS)
+#if canImport(UIKit)
 
 import UIKit
 

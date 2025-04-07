@@ -9,7 +9,7 @@ import SwiftUI
 import Confirmation
 
 struct ContentView: View {
-#if os(iOS)
+#if canImport(UIKit)
     private var sheetButtonSourceView = UIView()
 #endif
 
@@ -22,7 +22,7 @@ struct ContentView: View {
             Button(action: { Task { await showSheet() }}) {
                 Text("Show a sheet")
             }
-#if os(iOS)
+#if canImport(UIKit)
             .confirmationSourceView(sheetButtonSourceView)
 #endif
         }
@@ -47,9 +47,9 @@ struct ContentView: View {
     }
 
     func showSheet() async {
-#if os(macOS)
+#if canImport(AppKit)
         let style: Confirmation.Style = .sheet()
-#elseif os(iOS)
+#elseif canImport(UIKit)
         let style: Confirmation.Style = .sheet(sourceView: sheetButtonSourceView)
 #endif
 

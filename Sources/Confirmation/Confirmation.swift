@@ -6,9 +6,9 @@
 //  Copyright © 2022 Manabu Nakazawa. All rights reserved.
 //
 
-#if os(macOS)
+#if canImport(AppKit)
 import AppKit
-#elseif os(iOS)
+#elseif canImport(UIKit)
 import UIKit
 #endif
 
@@ -28,7 +28,7 @@ public enum Confirmation {
                 return title
             }
         }
-#if os(iOS)
+#if canImport(UIKit)
         var uiAlertActionStyle: UIAlertAction.Style {
             switch self {
             case .default:
@@ -58,7 +58,7 @@ public enum Confirmation {
     }
 
     public enum Style {
-#if os(macOS)
+#if canImport(AppKit)
         case alert(NSWindow? = nil, style: NSAlert.Style = .warning)
         case sheet(NSWindow? = nil)
 
@@ -70,7 +70,7 @@ public enum Confirmation {
                 return window
             }
         }
-#elseif os(iOS)
+#elseif canImport(UIKit)
         case alert(UIViewController? = nil)
         case sheet(sourceView: UIView, viewController: UIViewController? = nil)
 
@@ -96,7 +96,7 @@ public enum Confirmation {
 
     @MainActor public static func show(title: String?, description: String?, actions: [Action], style: Style) async -> Action? {
         assert(!actions.isEmpty)
-#if os(macOS)
+#if canImport(AppKit)
         let alert = NSAlert()
         alert.messageText = title ?? ""
         alert.informativeText = description ?? ""
@@ -146,7 +146,7 @@ public enum Confirmation {
                 return false
             }) ?? actions.first ?? .cancel()
         }
-#elseif os(iOS)
+#elseif canImport(UIKit)
         guard let viewController = style.viewController ?? UIApplication.shared.visibleViewController() else {
             return nil
         }
@@ -194,7 +194,7 @@ public enum Confirmation {
     }
 }
 
-#if os(macOS)
+#if canImport(AppKit)
 // HACK: To suppress deprecation warning.
 protocol EndSheetExecutable {
     func endSheet(_ sheet: NSWindow)
